@@ -513,10 +513,15 @@ class LeadProvider:
         mapq_min=self.config.mapq
         alen_min=self.config.min_alignment_length
 
+        exclude_flags = self.config.input_exclude_flags  # slight perf improvement avoiding dot lookup in hot loop
         for read in bam.fetch(contig,start,end,until_eof=False):
             #if self.read_count % 1000000 == 0:
             #    gc.collect()
             if read.reference_start < start or read.reference_start >= end:
+                continue
+
+            # drop reads as per flags
+            if read.flag & exclude_flags:
                 continue
 
             self.read_id+=1

@@ -16,7 +16,7 @@ import argparse
 from sniffles import util
 
 VERSION="Sniffles2"
-BUILD="2.0.7"
+BUILD="2.0.7-epi2me"
 SNF_VERSION="S2_rc4"
 
 class ArgFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
@@ -72,6 +72,7 @@ def from_cmdline():
     main_args.add_argument("--non-germline", help="Call non-germline SVs (rare, somatic or mosaic SVs)", default=False, action="store_true")
     main_args.add_argument("--phase", help="Determine phase for SV calls (requires the input alignments to be phased)", default=False, action="store_true")
     main_args.add_argument("-t","--threads", metavar="N", type=int, help="Number of parallel threads to use (speed-up for multi-core CPUs)", default=4)
+    main_args.add_argument("--input-exclude-flags", metavar="exclude_flags", type=int, help="SAM flags to exclude when reading input alignments for single-sample calling", default=0)
 
     filter_args = parser.add_argument_group("SV Filtering parameters")
     filter_args.add_argument("--minsupport", metavar="auto", type=str, help="Minimum number of supporting reads for a SV to be reported (default: automatically choose based on coverage)", default="auto")
